@@ -5,3 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+
+
+
+
+  admin = User.find_or_create_by(email: 'admin@codyssey.com')
+  admin.update_attributes(password: 'hetauda04',password_confirmation: 'hetauda04', superadmin: true)
