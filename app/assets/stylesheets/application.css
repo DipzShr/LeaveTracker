@@ -10,6 +10,12 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require bootstrap
+ *= require bootstrap-selector/bootstrap-select.min
+ *= require bootstrap-datepicker/datepicker
+ *= require bootstrap-switch/bootstrap-switch.min
+ *= require daterangepicker/daterangepicker
+ *= require fancybox/jquery.fancybox-1.3.4
  *= require_tree .
  *= require_self
  */
