@@ -10,14 +10,20 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require jquery
+//= require jquery_ujs
+//= require jquery-ui.min
+//= require jquery-1.7.1.min
+//= require misc/noconflict.jquery-1.7.1
+//= require bootstrap-datepicker
 //= require bootstrap.min
 //= require plugins/bootstrap-selector/bootstrap-select.min
-//= require plugins/bootstrap-datepicker/datepicker
 //= require plugins/bootstrap-switch/bootstrap-switch.min
 //= require plugins/daterangepicker/daterangepicker
 //= require plugins/fancybox/jquery.fancybox-1.3.4
 //= require plugins/fancybox/jquery.easing-1.3.pack
-//= require jquery
-//= require jquery_ujs
+//= require moment
+//= require fullcalendar
+//= require gcal
 //= require turbolinks
 //= require_tree .
