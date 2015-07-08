@@ -1,10 +1,10 @@
 class CreateLeaveRequests < ActiveRecord::Migration
   def change
     create_table :leave_requests do |t|
-      t.integer :type
-      t.integer :status
-      t.datetime :start_at
-      t.datetime :end_at
+      t.string :leave_type
+      t.string :status
+      t.datetime :leave_date
+      t.string :duration
       t.integer :user_id
 
       t.timestamps null: false
