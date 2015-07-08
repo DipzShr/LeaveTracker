@@ -1,0 +1,38 @@
+.fancbox-wrapper
+  section.content
+    .box.box-solid
+      .box-body
+        #tabs-basic.tab-pane
+          .tabbable
+            ul.nav.nav-tabs
+              li.active
+                a href='#' class='leave_form' id='leave_form'
+                  | Leave Form
+  div.new_form
+    = form_tag leave_requests_path do
+      .form-group
+        .col-xs-4
+          = label_tag :name, 'Name:', class: 'label-control'
+        .col-xs-8.top_margin
+          = select_tag('id', options_from_collection_for_select(@employee, 'id', 'name'), class: 'form-control pull-right')
+        .clearfix
+      .form-group
+        .col-xs-4
+          = label_tag :leave_type, 'Leave Type:', class: 'label-control'
+        .col-xs-8.top_margin
+         = select_tag 'leave_type', options_for_select([['Normal', 'normal'], ['Sick', 'sick']]), selected: '', class: 'form-control pull-right', required: '', id: 'leave_type'
+        .clearfix
+      .form-group
+        .col-xs-4
+          = label_tag :date, 'Date:', class: 'label-control'
+        .col-xs-8.top_margin
+          <input type="text" name="leave_date" class='form-control' required='' id='leave_date'>
+        .clearfix
+      br
+      .col-xs-12
+        .btn.btn-primary.pull-right.cancel_form
+          | Cancel
+        = submit_tag 'Submit', class: 'btn btn-success pull-right', id: 'submit_leave_request'
+
+javascript:
+  $('#leave_date').datepicker();

@@ -1,0 +1,62 @@
+.container
+  = link_to 'Add Leave', new_leave_request_path, class: 'btn btn-primary pull-right', id: 'add_leave'
+  section.content
+    .box.box-solid
+      .box-body
+        #tabs-basic.tab-pane
+          .tabbable
+            ul.nav.nav-tabs
+              li
+                a href=users_path class='user_index' id='user_idex'
+                  | Dashboard
+              li.active
+                a href='#' class='show_leaves' id='show_leaves'
+                  | Leaves
+              li
+                a href=employees_path class='show_employee' id='show_employee'
+                  | Employee
+  .col-xs-10
+    div#table_of_leave
+      table.table
+        thead
+          tr
+            th Name
+            th Date
+            th Type
+            th Status
+            th.pull-right
+              | Action
+        tbody
+          - @leaves.each do |user, leave_requests|
+            - leave_requests.each do |leave|
+              tr
+                td
+                  - if leave_requests.index(leave) == 0
+                    b
+                      = user.name
+                td
+                  = leave.leave_date.to_date.to_s
+                td
+                  = leave.leave_type.camelize
+                td
+                  = leave.status.camelize
+                td.pull-right
+                  - if leave.leave_date.to_date > Date.today && leave.status != 'accepted'
+                    - if leave.status != 'rejected'
+                      .btn.btn-danger
+                        | Reject
+                    .btn.btn-primary
+                      | Accept
+
+javascript:
+   $(document).on('click','#add_leave', function(e) {
+    e.preventDefault();
+    jQ_1_7.fancybox.showActivity();
+    var url = ($(this)).attr('href');
+      $.get(url, function(data){
+        jQ_1_7.fancybox.hideActivity();
+        jQ_1_7.fancybox(data,{
+          'scrolling': 'no'
+        });
+      });
+  });
