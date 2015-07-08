@@ -35,6 +35,13 @@ Rails.application.routes.draw do
   #   end
 
   resources :users do
+    get :get_events, on: :collection
+  end
+
+  resources :employees do
+  end
+
+  resources :leave_requests, path: 'leaves' do
   end
 
   # Example resource route with more complex sub-resources:
