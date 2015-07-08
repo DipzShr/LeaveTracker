@@ -1,0 +1,53 @@
+.container
+  section.content
+    .box.box-solid
+      .box-body
+        #tabs-basic.tab-pane
+          .tabbable
+            ul.nav.nav-tabs
+              li
+                a href=users_path class='user_index' id='user_idex'
+                  | Dashboard
+              li
+                a href=leave_requests_path class='show_leaves' id='show_leaves'
+                  | Leaves
+              li.active
+                a href='#' class='show_employee' id='show_employee'
+                  | Employee
+  .col-xs-10
+    .div#table_of_employee
+      = render 'table_of_employee'
+  .clearfix
+  a href='#' class='employee' id='add_employee'
+    | + Add New Employee
+  = form_tag employees_path, remote: true do
+    .employee_form.hide
+      .form-group
+        .col-xs-2
+          = label_tag :name, 'Name:', class: 'label-control'
+        .col-xs-4.top_margin
+          = text_field_tag 'name', '', class: 'form-control', required: '', id: 'employee_name'
+        .clearfix
+      .form-group
+        .col-xs-2
+          = label_tag :email, 'Email:', class: 'label-control'
+        .col-xs-4.top_margin
+          = email_field_tag 'email', '', class: 'form-control', required: '', id: 'employee_email'
+        .clearfix
+      .form-group
+        .col-xs-2
+          = label_tag :role, 'Role:', class: 'label-control'
+        .col-xs-4.top_margin
+          = select_tag 'role', options_for_select([['Employee', 'employee'], ['Admin', 'admin']]), selected: '', class: 'form-control', required: '', id: 'employee_role'
+        .clearfix
+      .form-group.hide
+        = text_field_tag 'user_id', '', id: 'user_id'
+      br
+      .col-xs-6
+        .btn.btn-primary.pull-right.cancel_form
+          | Cancel
+        = submit_tag 'Submit', class: 'btn btn-success pull-right', id: 'submit_employee_information'
+
+javascript:
+  var initial_employee_form_data = $('.employee_form').html();
+  var url = '#{employees_path}';

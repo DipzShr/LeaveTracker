@@ -1,0 +1,8 @@
+
+var content = '<%= j render "table_of_employee" %>'
+$('#table_of_employee').html(content);
+ var content = $('.employee_form');
+$('.employee_form').addClass('hide');
+content.slideToggle(500, function () {
+  $('.employee_form').html(initial_employee_form_data);
+});
