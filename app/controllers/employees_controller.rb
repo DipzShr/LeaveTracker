@@ -17,7 +17,6 @@ class EmployeesController < ApplicationController
       unless user.roles.first.name == role_name
         role = Role.where(name: role_name).first_or_create
         user.roles.delete_all
-        binding.pry
         user.roles << role
       end
       flash[:notice] = 'Updated.'
