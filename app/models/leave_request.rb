@@ -1,5 +1,5 @@
 class LeaveRequest < ActiveRecord::Base
-  validates :type, :status, :start_at, :end_at, presence: true
+  validates :leave_type, :status, :leave_date, presence: true
 
 	belongs_to :user
 end
