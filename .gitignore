@@ -11,3 +11,4 @@
 /log/*
 !/log/.keep
 /tmp
+/app/views/shared/_table_of_employee.html.slim
