@@ -1,1 +1,17 @@
-h1 hello
+.container
+  section.content
+    .box.box-solid
+      .box-body
+        #tabs-basic.tab-pane
+          .tabbable
+            ul.nav.nav-tabs
+              li.active
+                a href='#' class='user_index' id='user_idex'
+                  | Dashboard
+              li
+                a href=leave_requests_path class='show_leaves' id='show_leaves'
+                  | Leaves
+              li
+                a href=employees_path class='show_employee' id='show_employee'
+                  | Employee
+  div#calendar
