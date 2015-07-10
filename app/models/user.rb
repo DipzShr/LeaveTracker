@@ -22,4 +22,8 @@ class User < ActiveRecord::Base
     File.open(path, "wb") { |f| f.write(upload['datafile'].read) }
   end
 
+  def can_create?(leave_request)
+    return self.role?('admin') || self == leave_request.user
+  end
+
 end

@@ -20,27 +20,27 @@ class LeaveRequestsController < ApplicationController
   end
 
   def create
-  	user = User.find(params[:id])
-    leave_type = params[:leave_type]
-    leave_date = Date.strptime(params[:leave_date], "%m/%d/%Y")
-    status = current_user.role?('admin') ? 'accepted' : 'pending'
-    if leave_date >= Date.today
-      day = leave_date.strftime('%A')
-      if (day == 'Sunday' || day == 'Saturday')
-        message = "You have selected public holiday: '#{day}'"
-      else
-        if user.leave_requests.map(&:leave_date).map(&:to_date).include?(leave_date)
-          message = "Sorry. Your leave request for the date '#{leave_date}' has already been recorded."
-        else
-          leave_request = user.leave_requests.create(leave_type: leave_type, status: status, leave_date: leave_date, duration: 'full_day')
+    begin
+      leave_date = Date.strptime(params[:leave_date].to_s, "%m/%d/%Y")
+      user = User.find_by_id(params[:id])
+      leave_type = params[:leave_type]
+      status = current_user.role?('admin') ? 'accepted' : 'pending'
+      params_for_leave_request = { leave_type: leave_type ||= 'normal', status: status, leave_date: leave_date, duration: 'full_day' }
+      leave_request = user.leave_requests.new(params_for_leave_request) if user.present?
+      if leave_request && current_user.can_create?(leave_request)
+        date_is_valid, message = date_valid?(leave_date, user)
+        if date_is_valid
+          leave_request.save!
           send_mail(leave_request)
-          message = "Your leave request has been successfully recorded for date '#{leave_date}'."
         end
+      else
+        message = 'Invalid request.'
       end
-    else
-      message = "You cannot request for the date '#{leave_date}'. The date has already gone."
+    rescue ArgumentError
+      message = 'Sorry unable to process.'
     end
     flash[:notice] = message
+
     redirect_to leave_requests_path
   end
 
@@ -52,6 +52,23 @@ class LeaveRequestsController < ApplicationController
   end
 
   private
+
+  def date_valid?(date, user)
+    day = date.strftime('%A')
+    if date < Date.today
+      message = "You cannot request for the date '#{date}'. The date has already gone."
+      return false, message
+    elsif (day == 'Sunday' || day == 'Saturday')
+      message = "You have selected public holiday: '#{day}'."
+      return false, message
+    elsif user.leave_requests.map(&:leave_date).map(&:to_date).include?(date)
+      message = "Sorry. Your leave request for the date '#{date}' has already been recorded earlier." 
+      return false, message
+    else
+      message = "You cannot request for the date '#{date}'. The date has already gone."
+      return true, message
+    end
+  end
 
   def send_mail(leave)
     Mail.defaults do
