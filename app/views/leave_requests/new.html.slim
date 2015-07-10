@@ -30,9 +30,14 @@
         .clearfix
       br
       .col-xs-12
-        .btn.btn-primary.pull-right.cancel_form
+        .btn.btn-default.pull-right.cancel_form
           | Cancel
-        = submit_tag 'Submit', class: 'btn btn-success pull-right', id: 'submit_leave_request'
+        = submit_tag 'Submit', class: 'btn btn-primary pull-right', id: 'submit_leave_request'
 
 javascript:
-  $('#leave_date').datepicker();
+  $('#leave_date').datepicker({
+    startDate: '+0d',
+    endDate: '+1m',
+    disableTouchKeyboard: true,
+    enableOnReadonly: false
+  });
