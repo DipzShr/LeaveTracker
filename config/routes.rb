@@ -35,10 +35,14 @@ Rails.application.routes.draw do
   #   end
 
   resources :users do
-    get :get_events, on: :collection
+    collection do
+      get :get_events
+    end
   end
 
   resources :employees do
+    post :upload_cv
+    post :download_pdf
   end
 
   resources :leave_requests, path: 'leaves' do
