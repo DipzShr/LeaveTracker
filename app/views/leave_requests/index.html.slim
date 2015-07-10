@@ -1,5 +1,12 @@
 .container
-  = link_to 'Add Leave', new_leave_request_path, class: 'btn btn-primary pull-right', id: 'add_leave'
+  - if current_user.role? :employee
+    - if @count >= 15
+      .btn.btn-primary.pull-right
+        | Add Leave
+    - else
+       = link_to 'Add Leave', new_leave_request_path, class: 'btn btn-primary pull-right', id: 'add_leave'
+  -else
+    = link_to 'Add Leave', new_leave_request_path, class: 'btn btn-primary pull-right', id: 'add_leave'
   section.content
     .box.box-solid
       .box-body
@@ -23,33 +30,35 @@
       table.table
         thead
           tr
-            th Name
+            - if current_user.role? :admin
+              th Name
             th Date
             th Type
             th Status
-            th.pull-right
-              | Action
+            - if current_user.role? :admin
+              th.pull-right
+                | Actions
         tbody
           - @leaves.each do |user, leave_requests|
             - leave_requests.each do |leave|
               tr
-                td
-                  - if leave_requests.index(leave) == 0
-                    b
-                      = user.name
+                - if current_user.role? :admin
+                  td
+                    - if leave_requests.index(leave) == 0
+                      b
+                        = user.name
                 td
                   = leave.leave_date.to_date.to_s
                 td
                   = leave.leave_type.camelize
                 td
                   = leave.status.camelize
-                td.pull-right
-                  - if leave.leave_date.to_date > Date.today && leave.status != 'accepted'
-                    - if leave.status != 'rejected'
-                      .btn.btn-danger
-                        | Reject
-                    .btn.btn-primary
-                      | Accept
+                - if current_user.role? :admin
+                  td.pull-right
+                    - if leave.leave_date.to_date > Date.today && leave.status != 'accepted'
+                      - unless leave.status == 'rejected'
+                        = link_to 'Reject', leave_request_path(leave.id, status: 'rejected'), method: :put, class: 'btn btn-danger', data: {confirm: 'Are you sure to reject?'}
+                      = link_to 'Accept', leave_request_path(leave.id, status: 'accepted'), method: :put, class: 'btn btn-primary cancel_form', data: {confirm: 'Are you sure to accept?'}
 
 javascript:
    $(document).on('click','#add_leave', function(e) {
