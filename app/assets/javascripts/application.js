@@ -24,6 +24,5 @@
 //= require plugins/fancybox/jquery.easing-1.3.pack
 //= require moment
 //= require fullcalendar
-//= require gcal
 //= require turbolinks
 //= require_tree .
