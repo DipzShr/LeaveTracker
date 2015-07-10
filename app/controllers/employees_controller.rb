@@ -1,7 +1,8 @@
 class EmployeesController < ApplicationController
+
   def index
     @users = Array.wrap(User.all) - Array.wrap(current_user)
-    respond_to do |format|                                                                                                                                                                                                                                                                                                                                                                          
+    respond_to do |format|                                                                                                                                                                                                                                                                                                                                                                     
       format.html
       format.js
     end
