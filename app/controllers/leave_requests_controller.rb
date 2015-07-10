@@ -44,6 +44,12 @@ class LeaveRequestsController < ApplicationController
     redirect_to leave_requests_path
   end
 
+  def update
+    leave_request = LeaveRequest.find(params[:id])
+    leave_request.update_attributes(status: params[:status])
+
+    redirect_to leave_requests_path
+  end
 
   private
 
