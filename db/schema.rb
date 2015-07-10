@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150706155238) do
+ActiveRecord::Schema.define(version: 20150709192441) do
 
   create_table "leave_requests", force: :cascade do |t|
     t.string   "leave_type", limit: 255
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20150706155238) do
     t.integer  "status",                 limit: 4
     t.boolean  "superadmin"
     t.string   "name",                   limit: 255
+    t.string   "filename",               limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
