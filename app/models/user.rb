@@ -5,4 +5,18 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   has_many :leave_requests
   has_and_belongs_to_many :roles
+
+  CV_STORE = File.join Rails.root.to_s, 'public', 'CVs'
+
+
+  def upload_cv(upload)
+    name =  upload['datafile'].original_filename
+    self.filename = name
+    self.save!
+    # create the file path
+    path = File.join(CV_STORE, self.filename)
+    # write the file
+    File.open(path, "wb") { |f| f.write(upload['datafile'].read) }
+  end
+
 end
