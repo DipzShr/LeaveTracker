@@ -21,8 +21,7 @@ class EmployeesController < ApplicationController
       end
       flash[:notice] = 'Updated.'
     else
-      user = User.create(email: email)
-      user.update_attributes(password: 'hetauda04', password_confirmation: 'hetauda04', name: name)
+      user = User.create(email: email, password: 'hetauda04', password_confirmation: 'hetauda04', name: name)
       user.roles << Role.where(name: role_name).first_or_create
       flash[:notice] = 'Saved.'
     end
