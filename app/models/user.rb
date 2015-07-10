@@ -8,6 +8,9 @@ class User < ActiveRecord::Base
 
   CV_STORE = File.join Rails.root.to_s, 'public', 'CVs'
 
+  def role?(role)
+  	return !!self.roles.find_by_name(role.to_s)
+  end
 
   def upload_cv(upload)
     name =  upload['datafile'].original_filename
