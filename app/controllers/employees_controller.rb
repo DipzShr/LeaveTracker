@@ -53,4 +53,24 @@ class EmployeesController < ApplicationController
       flash[:error] = 'You provided wrong old password.'
     end
 
+    redirect_to employee_path(current_user.id)
+  end
+
+  def upload_cv
+    if upload = params[:upload]
+      datafile = upload[:datafile]
+      if File.extname(datafile.original_filename) == '.pdf'
+        user = User.find(params[:employee_id])
+        user.upload_cv(params[:upload])
+        flash[:notice] = 'CV successfully updated.'
+      else
+        flash[:notice] = 'Wrong extension.'
+      end
+    else
+      flash[:notice] = 'No pdf found.'
+    end
+
+    redirect_to employee_path(current_user.id)
+  end
+
 end
