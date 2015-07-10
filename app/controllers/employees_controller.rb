@@ -43,4 +43,14 @@ class EmployeesController < ApplicationController
 
     return redirect_to employees_path
   end
+
+  def update
+    if current_user.valid_password?(params['password0'])
+      current_user.update_attributes(password: params['password1'], password_confirmation: params['password1'])
+      sign_in(current_user, :bypass => true)
+      flash[:success] = 'Password successfully changed.'
+    else
+      flash[:error] = 'You provided wrong old password.'
+    end
+
 end
