@@ -73,4 +73,11 @@ class EmployeesController < ApplicationController
     redirect_to employee_path(current_user.id)
   end
 
+  def download_pdf
+    user = User.find(params[:employee_id])
+    send_file("#{Rails.root}/public/CVs/#{user.filename}",
+              filename: "#{user.name}.pdf",
+              type: "application/pdf")
+  end
+
 end
