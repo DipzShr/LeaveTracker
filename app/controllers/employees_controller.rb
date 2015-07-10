@@ -29,6 +29,13 @@ class EmployeesController < ApplicationController
     redirect_to employees_path
   end
 
+  def show
+    unless @user = User.find_by_id(params[:id])
+      flash[:notice] = 'Wrong parameter.'
+      redirect_to employee_path(current_user.id)
+    end
+  end
+
   def destroy
     user = User.find(params[:id])
     user.roles.delete_all
