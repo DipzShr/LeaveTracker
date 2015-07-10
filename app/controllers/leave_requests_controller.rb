@@ -1,13 +1,22 @@
 class LeaveRequestsController < ApplicationController
-
+  load_and_authorize_resource
+  skip_authorize_resource :only => :new
+  
   def new
-  	@employee = User.all
+    if current_user.role? :admin
+      @employee = User.all
+    else
+      @employee = Array.wrap(current_user)
+    end
   	render layout: false
   end
 
   def index
-  	@leaves = LeaveRequest.all.group_by(&:user)
-  	# @leaves = LeaveRequest.all
+    @leaves = LeaveRequest.all.group_by(&:user)
+    unless current_user.role? :admin
+      @leaves = @leaves.select{ |user, leave_requests| user == current_user }
+      @count = @leaves.map{|user, leave_requests| leave_requests.count }.first
+    end
   end
 
   def create
