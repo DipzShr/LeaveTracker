@@ -20,6 +20,7 @@ gem "twitter-bootstrap-rails"
 gem 'fullcalendar-rails'
 gem 'momentjs-rails'
 gem 'bootstrap-datepicker-rails'
+gem 'mail'
 
 
 # Use jquery as the JavaScript library

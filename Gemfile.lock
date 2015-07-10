@@ -206,6 +206,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   less-rails
+  mail
   momentjs-rails
   mysql2
   pry
