@@ -19,3 +19,27 @@
 .new_form {
   padding-top: 10px;
 }
+
+.profile {
+  width: 60%;
+  padding: 25px;
+}
+
+.cv_form {
+  margin-top: -10px;
+  margin-left: 4px;
+}
+
+#upload {
+  margin-top: -10px;
+}
+
+.password {
+  margin-top: 25px;
+  padding: 10px;
+  border: 1px gray solid;
+}
+
+.label_tag {
+  padding-top: 10px;
+}
