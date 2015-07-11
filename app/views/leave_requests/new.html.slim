@@ -9,12 +9,12 @@
                 a href='#' class='leave_form' id='leave_form'
                   | Leave Form
   div.new_form
-    = form_tag leave_requests_path do
+    = form_tag leave_requests_path, id: 'leave_request_form' do
       .form-group
         .col-xs-4
           = label_tag :name, 'Name:', class: 'label-control'
         .col-xs-8.top_margin
-          = select_tag('id', options_from_collection_for_select(@employee, 'id', 'name'), class: 'form-control pull-right')
+          = select_tag('id', options_from_collection_for_select(@employees, 'id', 'name'), class: 'form-control pull-right')
         .clearfix
       .form-group
         .col-xs-4

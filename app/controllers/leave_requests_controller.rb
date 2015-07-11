@@ -4,11 +4,11 @@ class LeaveRequestsController < ApplicationController
   
   def new
     if current_user.role? :admin
-      @employee = User.all
+      @employees = User.all
     else
-      @employee = Array.wrap(current_user)
+      @employees = Array.wrap(current_user)
     end
-  	render layout: false
+  	render layout: false if params[:layout]
   end
 
   def index
