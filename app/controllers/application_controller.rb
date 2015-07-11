@@ -10,6 +10,6 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
-	redirect_to users_path, :alert => exception.message
+	redirect_to users_path, :alert => 'Invalid Request.'
   end
 end
