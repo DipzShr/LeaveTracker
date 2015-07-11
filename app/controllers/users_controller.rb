@@ -2,9 +2,6 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   respond_to :json
-	def index
-		
-	end
 
   def get_events
     date = Date.today
