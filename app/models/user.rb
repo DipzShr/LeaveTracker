@@ -26,4 +26,8 @@ class User < ActiveRecord::Base
     return self.role?('admin') || self == leave_request.user
   end
 
+  def is_valid?(user)
+    return self == user
+  end
+
 end
