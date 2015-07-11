@@ -17,8 +17,8 @@
               li
                 a href=employee_path(current_user.id) class='show_profile' id='show_profile'
                   | Profile
-    .div#table_of_employee
-      = render 'table_of_employee'
+    .div#employees_list
+      = render 'employees_list'
   .clearfix
   - if current_user.role? :admin
     a href='#' class='show_form' id='add_employee'
