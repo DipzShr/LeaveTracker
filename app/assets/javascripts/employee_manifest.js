@@ -8,12 +8,12 @@ $(function() {
 
   $(document).on('click', '.show_form', function(e){
     e.preventDefault();
-    $('.new_form').removeClass('hide');
+    $('.hidden_new_form').removeClass('hide');
   });
 
   $(document).on('click', '.edit_employee', function(e){
     e.preventDefault();
-    $('.new_form').removeClass('hide');
+    $('.hidden_new_form').removeClass('hide');
     var closest_tr = $(this).closest('tr');
     var name = closest_tr.find('td.employee_name').text().replace(/[\n\r]+/g, '').trim();
     var email = closest_tr.find('td.employee_email').text().replace(/[\n\r]+/g, '').trim();
@@ -28,7 +28,8 @@ $(function() {
     e.preventDefault();
     var form_id = $(this).closest('form').attr('id');
     document.getElementById(form_id).reset();
-    $('.new_form').addClass('hide');
+    var div = $('#' + form_id).closest('div');
+    if (div.hasClass('hidden_new_form')) $('.hidden_new_form').addClass('hide') ;
   });
-
+  
 });

@@ -23,23 +23,23 @@
   - if current_user.role? :admin
     a href='#' class='show_form' id='add_employee'
       | + Add New Employee
-    .new_form.hide
+    .new_form.hidden_new_form.hide
       = form_tag employees_path, remote: true, id: 'new_employee_form' do
         .form-group
           .col-xs-2
-            = label_tag :name, 'Name:', class: 'label-control'
+            = label_tag :name, 'Name:', class: 'label-control label_tag'
           .col-xs-4.top_margin
             = text_field_tag 'name', '', class: 'form-control', required: '', id: 'employee_name'
           .clearfix
         .form-group
           .col-xs-2
-            = label_tag :email, 'Email:', class: 'label-control'
+            = label_tag :email, 'Email:', class: 'label-control label_tag'
           .col-xs-4.top_margin
             = email_field_tag 'email', '', class: 'form-control', required: '', id: 'employee_email'
           .clearfix
         .form-group
           .col-xs-2
-            = label_tag :role, 'Role:', class: 'label-control'
+            = label_tag :role, 'Role:', class: 'label-control label_tag'
           .col-xs-4.top_margin
             = select_tag 'role', options_for_select([['Employee', 'employee'], ['Admin', 'admin']]), selected: '', class: 'form-control', required: '', id: 'employee_role'
           .clearfix

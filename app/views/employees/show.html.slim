@@ -42,7 +42,7 @@
     - if @user == current_user
       .btn.btn-default.show_form#change_password.pull-left
         | Change password
-      .col-xs-10.password.new_form.hide
+      .col-xs-10.password.new_form.hidden_new_form.hide
         = form_tag employee_path(current_user.id), method: :put, id: 'password_change_form' do
           .form-group
             .col-xs-4
