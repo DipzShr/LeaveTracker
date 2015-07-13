@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   resources :employees do
     post :upload_cv
     post :download_pdf
+    delete :reset_leaves
   end
 
   resources :leave_requests, path: 'leaves' do
