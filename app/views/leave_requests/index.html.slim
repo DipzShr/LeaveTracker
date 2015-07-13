@@ -1,12 +1,5 @@
 .container
-  - if current_user.role? :employee
-    - if @count >= 15
-      .btn.btn-primary.pull-right
-        | Add Leave
-    - else
-       = link_to 'Add Leave', new_leave_request_path(layout: 'false'), class: 'btn btn-primary pull-right', id: 'add_leave'
-  -else
-    = link_to 'Add Leave', new_leave_request_path, class: 'btn btn-primary pull-right', id: 'add_leave'
+  = link_to 'Add Leave', new_leave_request_path(layout: 'false'), class: 'btn btn-primary pull-right', id: 'add_leave'
   section.content
     .box.box-solid
       .box-body
@@ -26,39 +19,46 @@
                 a href=employee_path(current_user.id) class='show_profile' id='show_profile'
                   | Profile
   .col-xs-10
-    div#table_of_leave
-      table.table
-        thead
-          tr
-            - if current_user.role? :admin
-              th Name
-            th Date
-            th Type
-            th Status
-            - if current_user.role? :admin
-              th.pull-right
-                | Actions
-        tbody
-          - @leaves.each do |user, leave_requests|
-            - leave_requests.each do |leave|
-              tr
-                - if current_user.role? :admin
+    - if @leaves.present?
+      div#table_of_leave
+        table.table
+          thead
+            tr
+              - if current_user.role? :admin
+                th Name
+              th Date
+              th Type
+              th Status
+              - if current_user.role? :admin
+                th.pull-right
+                  | Actions
+          tbody
+            - @leaves.each do |user, leave_requests|
+              - leave_requests.each do |leave|
+                tr
+                  - if current_user.role? :admin
+                    td
+                      - if leave_requests.index(leave) == 0
+                        b
+                          = user.name
                   td
-                    - if leave_requests.index(leave) == 0
-                      b
-                        = user.name
-                td
-                  = leave.leave_date.to_date.to_s
-                td
-                  = leave.leave_type.camelize
-                td
-                  = leave.status.camelize
-                - if current_user.role? :admin
-                  td.pull-right
-                    - if leave.leave_date.to_date > Date.today && leave.status != 'accepted'
-                      - unless leave.status == 'rejected'
-                        = link_to 'Reject', leave_request_path(leave.id, status: 'rejected'), method: :put, class: 'btn btn-danger', data: {confirm: 'Are you sure to reject?'}
-                      = link_to 'Accept', leave_request_path(leave.id, status: 'accepted'), method: :put, class: 'btn btn-primary cancel_form', data: {confirm: 'Are you sure to accept?'}
+                    = leave.leave_date.to_date.to_s
+                  td
+                    = leave.leave_type.camelize
+                  td
+                    = leave.status.camelize
+                  - if current_user.role? :admin
+                    td.pull-right
+                      - if leave.leave_date.to_date >= Date.today && leave.status != 'accepted'
+                        - unless leave.status == 'rejected'
+                          = link_to 'Reject', leave_request_path(leave.id, status: 'rejected'), method: :put, class: 'btn btn-danger', data: {confirm: 'Are you sure to reject?'}
+                        = link_to 'Accept', leave_request_path(leave.id, status: 'accepted'), method: :put, class: 'btn btn-primary cancel_form', data: {confirm: 'Are you sure to accept?'}
+                    td
+                      - if leave_requests.index(leave) == 0
+                        = link_to 'Reset Leaves', employee_reset_leaves_path(user.id), method: :delete, class: 'btn btn-default', data: {confirm: 'Are you sure to reset?'}
+    - else
+      div#no_leave_request
+        h1 No leave requests till now.
 
 javascript:
   $(document).on('click','#add_leave', function(e) {
