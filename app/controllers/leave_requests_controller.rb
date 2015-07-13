@@ -24,11 +24,10 @@ class LeaveRequestsController < ApplicationController
       leave_type = params[:leave_type]
       status = current_user.role?('admin') ? 'accepted' : 'pending'
       params_for_leave_request = { leave_type: leave_type ||= 'normal', status: status, leave_date: leave_date, duration: 'full_day' }
-      leave_request = user.leave_requests.new(params_for_leave_request) if user.present?
-      if leave_request && current_user.can_create?(leave_request)
+      if user && current_user.can_create_leave_for(user)
         date_is_valid, message = date_valid?(leave_date, user)
         if date_is_valid
-          leave_request.save!
+          leave_request = user.leave_requests.create(params_for_leave_request)
           send_mail(leave_request)
         end
       else
@@ -57,13 +56,13 @@ class LeaveRequestsController < ApplicationController
       message = "You cannot request for the date '#{date}'. The date has already gone."
       return false, message
     elsif (day == 'Sunday' || day == 'Saturday')
-      message = "You have selected public holiday: '#{day}'."
+      message = "Sorry. You have selected public holiday: '#{day}'."
       return false, message
     elsif user.leave_requests.map(&:leave_date).map(&:to_date).include?(date)
       message = "Sorry. Your leave request for the date '#{date}' has already been recorded earlier." 
       return false, message
     else
-      message = "You cannot request for the date '#{date}'. The date has already gone."
+      message = "Your leave request for the date '#{date} has been recorded.'"
       return true, message
     end
   end
