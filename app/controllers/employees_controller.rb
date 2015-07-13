@@ -1,5 +1,5 @@
 class EmployeesController < ApplicationController
-  authorize_resource :class => :false
+  authorize_resource :class => false
   skip_authorize_resource :only => [:update, :download_pdf, :upload_cv]
 
   def index
@@ -34,13 +34,16 @@ class EmployeesController < ApplicationController
 
   def show
     unless @user = User.find_by_id(params[:id])
-      flash[:notice] = 'Wrong parameter.'
+      flash[:notice] = 'Invalid Request.'
       redirect_to employee_path(current_user.id)
     end
   end
 
   def destroy
     user = User.find(params[:id])
+    user.leave_requests.each do |leave|
+      leave.delete
+    end
     user.roles.delete_all
     user.delete
 
