@@ -90,4 +90,13 @@ class EmployeesController < ApplicationController
               type: "application/pdf")
   end
 
+  def reset_leaves
+    user = User.find_by_id(params[:employee_id])
+    user.leave_requests.each do |leave|
+      leave.delete
+    end
+
+    redirect_to leave_requests_path
+  end
+
 end
