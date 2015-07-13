@@ -22,8 +22,8 @@ class User < ActiveRecord::Base
     File.open(path, "wb") { |f| f.write(upload['datafile'].read) }
   end
 
-  def can_create?(leave_request)
-    return self.role?('admin') || self == leave_request.user
+  def can_create_leave_for(user)
+    return self.role?('admin') || self.is_valid?(user)
   end
 
   def is_valid?(user)
