@@ -7,16 +7,14 @@ class LeaveRequestsController < ApplicationController
       @employees = User.all
     else
       @employees = Array.wrap(current_user)
+      @leave_requests_count = current_user.leave_requests.count
     end
   	render layout: false if params[:layout]
   end
 
   def index
     @leaves = LeaveRequest.all.group_by(&:user)
-    unless current_user.role? :admin
-      @leaves = @leaves.select{ |user, leave_requests| user == current_user }
-      @count = @leaves.map{|user, leave_requests| leave_requests.count }.first
-    end
+    @leaves = @leaves.select{ |user, leave_requests| user == current_user } unless current_user.role? :admin
   end
 
   def create
