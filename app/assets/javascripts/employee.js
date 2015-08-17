@@ -2,6 +2,11 @@
 $(function() {
   $(document).ready(function() {
     $("#calendar").fullCalendar({
+      header: {
+        left: 'title',
+        right: 'today prev, next',
+        center: ''
+      },
       events: '/users/get_events.json'
     });
   });
@@ -32,4 +37,12 @@ $(function() {
     if (div.hasClass('hidden_new_form')) $('.hidden_new_form').addClass('hide') ;
   });
   
+  // $('#submit_employee_information').on('click', 'ajax:success', function(event, data) { 
+  //   debugger;
+  //   if (data.success === true) 
+  //   { 
+  //     return $('#employees_list').html(data.html); 
+  //   } 
+  // });
+
 });

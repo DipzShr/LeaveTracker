@@ -10,6 +10,14 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
-	redirect_to users_path, :alert => 'Invalid Request.'
+	 redirect_to users_path, :alert => 'Invalid Request.'
+  end
+
+  rescue_from ActiveRecord::RecordNotFound, :with => :rescue404
+
+ def rescue404
+    respond_to do |format|
+      format.html { render :file => "#{Rails.root}/public/404", :layout => false, :status => :not_found }
+    end
   end
 end

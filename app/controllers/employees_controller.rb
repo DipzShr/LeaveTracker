@@ -1,10 +1,10 @@
 class EmployeesController < ApplicationController
-  authorize_resource :class => false
+  authorize_resource :class => :false
   skip_authorize_resource :only => [:update, :download_pdf, :upload_cv]
 
   def index
     @users = User.where.not(id: current_user.id)
-    respond_to do |format|                                                                                                                                                                                                                                                                                                                                                                     
+    respond_to do |format|
       format.html
       format.js
     end
@@ -33,10 +33,9 @@ class EmployeesController < ApplicationController
   end
 
   def show
-    unless @user = User.find_by_id(params[:id])
-      flash[:notice] = 'Invalid Request.'
-      redirect_to employee_path(current_user.id)
-    end
+    @user = User.find(params[:id])
+      # flash[:notice] = 'Invalid Request.'
+      # redirect_to employee_path(current_user.id)
   end
 
   def destroy
@@ -86,7 +85,6 @@ class EmployeesController < ApplicationController
   end
 
   def download_pdf
-    authorize! :download_pdf, :employee
     user = User.find(params[:employee_id])
     send_file("#{Rails.root}/public/CVs/#{user.filename}",
               filename: "#{user.name}.pdf",
