@@ -35,6 +35,18 @@ Rails.application.routes.draw do
   #   end
 
   resources :users do
+    collection do
+      get :get_events
+    end
+  end
+
+  resources :employees do
+    post :upload_cv
+    post :download_pdf
+    delete :reset_leaves
+  end
+
+  resources :leave_requests, path: 'leaves' do
   end
 
   # Example resource route with more complex sub-resources:

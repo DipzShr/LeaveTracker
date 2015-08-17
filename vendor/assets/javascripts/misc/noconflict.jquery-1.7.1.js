@@ -1,0 +1,1 @@
+var jQ_1_7 = $.noConflict(true);

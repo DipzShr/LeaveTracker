@@ -1,0 +1,23 @@
+table.table
+  thead
+    tr
+      th Name
+      th Email
+      th Role
+      - if current_user.role? :admin
+        th.pull-right
+          | Actions
+  tbody
+    - @users.each do |user|
+      tr data-user_id = user.id
+        td.employee_name
+          = link_to user.name, employee_path(user.id)
+        td.employee_email
+          = user.email
+        td.employee_role
+          = user.roles.first.name.camelize
+        - if current_user.role? :admin
+          td.pull-right
+            = link_to 'Delete', employee_path(user.id), method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure?'}
+            .btn.btn-primary.edit_employee
+              | Edit

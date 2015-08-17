@@ -1,0 +1,75 @@
+.container
+  section.content
+    .box.box-solid
+      .box-body
+        #tabs-basic.tab-pane
+          .tabbable
+            ul.nav.nav-tabs.row
+              li
+                a href=users_path class='user_index' id='user_idex'
+                  | Dashboard
+              li
+                a href=leave_requests_path class='show_leaves' id='show_leaves'
+                  | Leaves
+              li
+                a href=employees_path class='show_employee' id='show_employee'
+                  | Employee
+              li.active
+                a href=employee_path(current_user.id) class='show_profile' id='show_profile'
+                  | Profile
+  .clearfix
+  .profile.col-xs-8
+    table.table.box-solid
+      tr
+        th.col-xs-2 Name:
+        td 
+          = @user.name
+      tr
+        th.col-xs-2 Email:
+        td 
+          = @user.email
+      tr
+        th.col-xs-2 Role:
+        td 
+          = @user.roles.first.name
+      tr
+        th.col-xs-2 CV:
+        td
+          - if @user.filename
+            = link_to @user.filename, employee_download_pdf_path(@user.id), method: :post
+          - else
+            | CV not uploaded yet.
+    - if @user == current_user
+      .btn.btn-default.show_form#change_password.pull-left
+        | Change password
+      .col-xs-10.password.new_form.hidden_new_form.hide
+        = form_tag employee_path(current_user.id), method: :put, id: 'password_change_form' do
+          .form-group
+            .col-xs-4
+              = label_tag :old_password, 'Old password:', class: 'label-control label_tag'
+            .col-xs-8.pull-left
+              = password_field_tag :password0, '', class: 'form-control', required: ''
+            .clearfix
+          .form-group
+            .col-xs-4
+              = label_tag :new_password, 'New password:', class: 'label-control label_tag'
+            .col-xs-8.pull-left
+              = password_field_tag :password1, '', class: 'form-control', required: ''
+            .clearfix
+          .col-xs-12
+            .btn.btn-default.pull-right.cancel_form
+              | Cancel
+            = submit_tag 'Submit', class: 'btn btn-primary pull-right'
+  - if @user == current_user
+    .col-xs-8.cv_form
+      = form_tag employee_upload_cv_path(current_user.id), :multipart => true, id: 'upload_cv_form' do
+        .form-group
+          .col-xs-3
+            = label_tag :select_file, 'Upload your CV:', class: 'label-control'
+          .col-xs-4
+            = file_field 'upload', 'datafile', required: '', accept: '.pdf'
+          .col-md-4#upload
+            .btn.btn-default.pull-right.cancel_form
+              | Cancel
+            = submit_tag 'Upload', class: 'btn btn-primary pull-right', id: 'upload_cv'
+        .clearfix

@@ -12,5 +12,17 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui.min
+//= require jquery-1.7.1.min
+//= require misc/noconflict.jquery-1.7.1
+//= require bootstrap-datepicker
+//= require bootstrap.min
+//= require plugins/bootstrap-selector/bootstrap-select.min
+//= require plugins/bootstrap-switch/bootstrap-switch.min
+//= require plugins/daterangepicker/daterangepicker
+//= require plugins/fancybox/jquery.fancybox-1.3.4
+//= require plugins/fancybox/jquery.easing-1.3.pack
+//= require moment
+//= require fullcalendar
 //= require turbolinks
 //= require_tree .

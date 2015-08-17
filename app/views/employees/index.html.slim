@@ -1,0 +1,55 @@
+.container
+  section.content
+    .box.box-solid
+      .box-body
+        #tabs-basic.tab-pane
+          .tabbable
+            ul.nav.nav-tabs.row
+              li
+                a href=users_path class='user_index' id='user_idex'
+                  | Dashboard
+              li
+                a href=leave_requests_path class='show_leaves' id='show_leaves'
+                  | Leaves
+              li.active
+                a href='#' class='show_employee' id='show_employee'
+                  | Employee
+              li
+                a href=employee_path(current_user.id) class='show_profile' id='show_profile'
+                  | Profile
+    .div#employees_list
+      = render 'employees_list'
+  .clearfix
+  - if current_user.role? :admin
+    a href='#' class='show_form' id='add_employee'
+      | + Add New Employee
+    .new_form.hidden_new_form.hide
+      = form_tag employees_path, remote: true, id: 'new_employee_form' do
+        .form-group
+          .col-xs-2
+            = label_tag :name, 'Name:', class: 'label-control label_tag'
+          .col-xs-4.top_margin
+            = text_field_tag 'name', '', class: 'form-control', required: '', id: 'employee_name'
+          .clearfix
+        .form-group
+          .col-xs-2
+            = label_tag :email, 'Email:', class: 'label-control label_tag'
+          .col-xs-4.top_margin
+            = email_field_tag 'email', '', class: 'form-control', required: '', id: 'employee_email'
+          .clearfix
+        .form-group
+          .col-xs-2
+            = label_tag :role, 'Role:', class: 'label-control label_tag'
+          .col-xs-4.top_margin
+            = select_tag 'role', options_for_select([['Employee', 'employee'], ['Admin', 'admin']]), selected: '', class: 'form-control', required: '', id: 'employee_role'
+          .clearfix
+        .form-group.hide
+          = text_field_tag 'user_id', '', id: 'user_id'
+        br
+        .col-xs-6
+          .btn.btn-default.pull-right.cancel_form
+            | Cancel
+          = submit_tag 'Submit', class: 'btn btn-primary pull-right', id: 'submit_employee_information'
+
+javascript:
+  var url = '#{employees_path}';

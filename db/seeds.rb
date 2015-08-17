@@ -10,5 +10,6 @@
 
 
 
-  admin = User.find_or_create_by(email: 'admin@codyssey.com')
-  admin.update_attributes(password: 'hetauda04',password_confirmation: 'hetauda04', superadmin: true)
+  admin = User.where(email: 'admin@codyssey.com').first_or_create
+  admin.update_attributes(password: 'hetauda04',password_confirmation: 'hetauda04', name: 'Admin', superadmin: true)
+  admin.roles << Role.where(name: 'admin').first_or_create
